@@ -64,4 +64,5 @@ for y in tqdm(pages, total=len(pages), desc="Extracting per offset", ncols=70):
     data, r = get_data(url, apikey, realhub_subcompany)
     update_document(data, realhub_company, realhub_subcompany, apikey)
     if len(data) == 0:
+        print("no data now. breaking")
         break
