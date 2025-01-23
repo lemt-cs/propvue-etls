@@ -22,7 +22,7 @@ realhub_company2 = os.getenv("REALHUB_COMPANY2")
 realhub_subcompany = os.getenv("REALHUB_SUBCOMPANY")
 apikey = os.getenv("REALHUB_APIKEY")
 
-modified_since = '2023-01-01T11:00:00'
+modified_since = '2024-01-01T11:00:00'
 
 source_script = os.path.basename(__file__)
 
@@ -58,7 +58,7 @@ def get_data(url, apikey, company):
 
 print(f"Now extracting for {realhub_subcompany}")
 # put high maximum number as it will break if no data is available to extract
-pages = range(1400*50, 200001, 50)
+pages = range(1, 200001, 50)
 for y in tqdm(pages, total=len(pages), desc="Extracting per offset", ncols=70):
     url = f'https://realhub.realbase.io/api/v2/orders.json?modified_since={modified_since}&include_order_items=true&limit=50&offset={str(y)}'
     data, r = get_data(url, apikey, realhub_subcompany)
