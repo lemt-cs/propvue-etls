@@ -1,8 +1,38 @@
-name: DOMAIN ETL to MongoDB
+# name: DOMAIN ETL to MongoDB
+
+# on:
+#   schedule:
+#     - cron: '0 2 * * *'
+#   workflow_dispatch:
+
+# jobs:
+#   etl_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.12'
+
+#       - name: Install dependencies
+#         run: |
+#           pip install -r requirements.txt
+
+#       - name: Run ETL script
+#         env:
+#           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+#           API_KEY: ${{ secrets.API_KEY }}
+#         run: python EL_search_smaps_mapped.py
+
+
+name: REALHUB ORDERS to MongoDB
 
 on:
-  # schedule:
-  #   - cron: '0 2 * * *'
+  schedule:
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:
@@ -24,5 +54,8 @@ jobs:
       - name: Run ETL script
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          API_KEY: ${{ secrets.API_KEY }}
-        run: python EL_search_smaps_mapped.py
+          REALHUB_COMPANY: ${{ secrets.REALHUB_COMPANY }}
+          REALHUB_COMPANY2: ${{ secrets.REALHUB_COMPANY2 }}
+          REALHUB_SUBCOMPANY: ${{ secrets.REALHUB_SUBCOMPANY }}
+          REALHUB_APIKEY: ${{ secrets.REALHUB_APIKEY }}
+        run: python EL_realhub_orders.py
