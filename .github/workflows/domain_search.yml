@@ -31,8 +31,8 @@
 name: REALHUB ORDERS to MongoDB
 
 on:
-  schedule:
-    - cron: '0 2 * * *'
+  # schedule:
+  #   - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:
