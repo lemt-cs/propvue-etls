@@ -53,10 +53,8 @@ def get_data(url, apikey, company):
                                 'x-api-token': apikey,
                                 })
     data = r.json()
-    # print(f"number of items = {len(data)}\ncompany = {company}")
     return data, r
 
-print(f"Now extracting for {realhub_subcompany}")
 # put high maximum number as it will break if no data is available to extract
 pages = range(1, 200001, 50)
 for y in tqdm(pages, total=len(pages), desc="Extracting per offset", ncols=70):
