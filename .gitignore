@@ -1,4 +1,6 @@
 .env
-domain.smaps_mapped.json
 venv
 L_atlas_to_local.py
+
+domain.smaps_mapped.json
+domain.smaps_mapped_unique.json

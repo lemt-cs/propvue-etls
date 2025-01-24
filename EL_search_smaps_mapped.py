@@ -14,7 +14,7 @@ mongodb_uri = os.getenv("MONGODB_URI")
 
 client = MongoClient(mongodb_uri)
 db = client['domain']
-coll_smaps = db['smaps_mapped']
+coll_smaps = db['smaps_mapped_unique']
 coll_core = db['solds_search_using_smaps']
 coll_error = db['error_smaps_search']
 
