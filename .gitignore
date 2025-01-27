@@ -1,6 +1,7 @@
 .env
 venv
 L_atlas_to_local.py
-
+T_local_solds.py
+offices_from_domain_search.csv
 domain.smaps_mapped.json
 domain.smaps_mapped_unique.json
