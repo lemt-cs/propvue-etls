@@ -70,7 +70,7 @@ def perform_etl(officeId, office, smapsID):
                 print(e)
                 print(data)
 
-smaps_new = smaps[612+113+590+195+526+559+135:]
+smaps_new = smaps[612+113+590+195+526+559+135+144:]
 for z in tqdm(smaps_new, total=len(smaps_new), desc="extracting per smap", ncols=100):
     data = {
         "listingType": "SOLD",
@@ -86,27 +86,40 @@ for z in tqdm(smaps_new, total=len(smaps_new), desc="extracting per smap", ncols
 
     # get total number of pages first from the response headers
     r_headers = dict(r.headers)
-    all_items = int(r_headers['X-Total-Count'])
-    max_page = 10
-    # extract listings per page
-    
-    if all_items > 1000:
-        total_pages = math.ceil(all_items / 100)
-        new_dict = {
-            "date_inserted": datetime.now(),
-            "source_script": source_script,
-            "smapsID": z['smapsID'],
-            "listedSince": listedSince,
-            "total_items": all_items,
-            "total_pages": total_pages
-        }
-        coll_error.update_one({
-            "smapsID": z['smapsID']
-        }, {"$set": new_dict}, upsert=True)
-
-        perform_etl(officeId=z['officeId'], office=z['office'], smapsID=z['smapsID'])
-    else:
-        perform_etl(officeId=z['officeId'], office=z['office'], smapsID=z['smapsID'])
-
+    try:
+        all_items = int(r_headers['X-Total-Count'])
+        max_page = 10
+        # extract listings per page
         
+        if all_items > 1000:
+            total_pages = math.ceil(all_items / 100)
+            new_dict = {
+                "date_inserted": datetime.now(),
+                "source_script": source_script,
+                "smapsID": z['smapsID'],
+                "listedSince": listedSince,
+                "total_items": all_items,
+                "total_pages": total_pages
+            }
+            coll_error.update_one({
+                "smapsID": z['smapsID']
+            }, {"$set": new_dict}, upsert=True)
+
+            perform_etl(officeId=z['officeId'], office=z['office'], smapsID=z['smapsID'])
+        else:
+            perform_etl(officeId=z['officeId'], office=z['office'], smapsID=z['smapsID'])
+    except KeyError as e:
+        new_dict = {
+                "date_inserted": datetime.now(),
+                "source_script": source_script,
+                "smapsID": z['smapsID'],
+                "listedSince": listedSince,
+                "total_items": all_items,
+                "total_pages": total_pages,
+                "error": f"KeyError: {str(e)}"
+            }
+        coll_error.update_one({
+                "smapsID": z['smapsID']
+            }, {"$set": new_dict}, upsert=True)
+                    
 print(f"see the collection {coll_error.name} for reprocessing of error smaps")
