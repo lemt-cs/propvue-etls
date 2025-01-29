@@ -70,7 +70,7 @@ def perform_etl(officeId, office, smapsID):
                 print(e)
                 print(data)
 
-smaps_new = smaps[612+113+590+195:]
+smaps_new = smaps[612+113+590+195+526:]
 for z in tqdm(smaps_new, total=len(smaps_new), desc="extracting per smap", ncols=100):
     data = {
         "listingType": "SOLD",
