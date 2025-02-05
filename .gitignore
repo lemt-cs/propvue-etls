@@ -8,3 +8,4 @@ domain.smaps_mapped_unique.json
 EL_search_smaps_mapped_local.py
 L_cosmos_to_local.py
 EL_search_smaps_mapped_cosmos.py
+L_azure_to_local.py
