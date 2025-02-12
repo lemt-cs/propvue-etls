@@ -10,3 +10,6 @@ L_cosmos_to_local.py
 EL_search_smaps_mapped_cosmos.py
 L_azure_to_local.py
 L_realhub_atlas_to_local.py
+TL_solds_to_sql_efficient.py
+L_insert_df_to_postgresql.py
+__pycache__

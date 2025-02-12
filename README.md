@@ -7,3 +7,5 @@
 1. python EL_search_smaps_mapped.py
 2. Optional python EL_search_smaps_mapped_local.py for local and github running
 
+## Load tables to sql server
+python TL_solds_to_sql_efficient.py
