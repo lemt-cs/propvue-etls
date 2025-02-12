@@ -45,32 +45,36 @@ def perform_etl(officeId, office, smapsID):
             "listedSince": listedSince,
             "sort": {"sortKey": "soldDate", "direction": "Descending"}
         }
-        r = requests.post(url, headers=headers, json=json_params)
-        data = r.json()
-        for x in data:
-            try:
-                if x['type'] == 'PropertyListing':
-                    primary_fields = {
-                        "officeId": officeId,
-                        "office": office,
-                        "smapsID": smapsID
-                    }
-                    primary_fields.update(x['listing'])
-                    coll_core.update_one({"id": primary_fields['id']}, {"$set": primary_fields}, upsert=True)
-                elif x['type'] == 'Project':
-                    for i in x['listings']:
+        try:
+            r = requests.post(url, headers=headers, json=json_params)
+            data = r.json()
+            for x in data:
+                try:
+                    if x['type'] == 'PropertyListing':
                         primary_fields = {
                             "officeId": officeId,
                             "office": office,
                             "smapsID": smapsID
                         }
-                        primary_fields.update(i)
-                        result = coll_core.update_many({"id": primary_fields['id']}, {"$set": primary_fields}, upsert=True)
-            except TypeError as e:
-                print(e)
-                print(data)
+                        primary_fields.update(x['listing'])
+                        coll_core.update_one({"id": primary_fields['id']}, {"$set": primary_fields}, upsert=True)
+                    elif x['type'] == 'Project':
+                        for i in x['listings']:
+                            primary_fields = {
+                                "officeId": officeId,
+                                "office": office,
+                                "smapsID": smapsID
+                            }
+                            primary_fields.update(i)
+                            result = coll_core.update_many({"id": primary_fields['id']}, {"$set": primary_fields}, upsert=True)
+                except TypeError as e:
+                    print(e)
+                    print(data)
+        except requests.exceptions.JSONDecodeError as e:
+            print(e)
+            print(data)
 
-smaps_new = smaps[542:]
+smaps_new = smaps[542+202:]
 # smaps_new = smaps.copy()
 for z in tqdm(smaps_new, total=len(smaps_new), desc="extracting per smap", ncols=100):
     data = {
