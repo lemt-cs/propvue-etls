@@ -74,7 +74,7 @@ def perform_etl(officeId, office, smapsID):
             print(e)
             print(data)
 
-smaps_new = smaps[542+202+718+651:]
+smaps_new = smaps[542+202+718+651+573:]
 # smaps_new = smaps.copy()
 for z in tqdm(smaps_new, total=len(smaps_new), desc="extracting per smap", ncols=100):
     data = {
