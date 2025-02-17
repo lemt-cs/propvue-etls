@@ -1,4 +1,4 @@
-name: DOMAIN ETL to MongoDB
+name: DOMAIN LISTINGS SEARCH to ATLAS MONGODB
 
 on:
   # schedule:
